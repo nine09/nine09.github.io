@@ -15,7 +15,7 @@ key: page-about
 
 **目前关注知识图谱与关系抽取领域**
 
-![摄于法国戛纳](/assets/images/my_pic/Cannes_1.jpg)
+![摄于法国戛纳](/assets/images/my_pic/Cannes_2.jpg)
 
 
 ## 博客的内容
