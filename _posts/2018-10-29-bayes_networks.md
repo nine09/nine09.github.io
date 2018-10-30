@@ -1,3 +1,4 @@
+---
 layout: article
 title: 贝叶斯网络
 article_header:
@@ -61,23 +62,23 @@ Undirected graphical models are more popular with the physics and vision communi
 
 <a name="repr"></a>
 
-<a name="repr"></a>Although directed models have a more complicated notion of independence than undirected models, they do have several advantages. The most important is that one can regard an arc from A to B as indicating that A ``causes'' B. (See the discussion on [causality](https://www.cs.ubc.ca/~murphyk/Bayes/bayes.html#causality).) This can be used as a guide to construct the graph structure. In addition, directed models can encode deterministic relationships, and are easier to learn (fit to data). In the rest of this tutorial, we will only discuss directed graphical models, i.e., Bayesian networks.
+<a name="repr"></a>Although directed models have a more complicated notion of independence than undirected models, they do have several advantages. The most important is that one can regard an arc from A to B as indicating that A ``causes`` B. (See the discussion on [causality](https://www.cs.ubc.ca/~murphyk/Bayes/bayes.html#causality).) This can be used as a guide to construct the graph structure. In addition, directed models can encode deterministic relationships, and are easier to learn (fit to data). In the rest of this tutorial, we will only discuss directed graphical models, i.e., Bayesian networks.
 
 In addition to the graph structure, it is necessary to specify the parameters of the model. For a directed model, we must specify the Conditional Probability Distribution (CPD) at each node. If the variables are discrete, this can be represented as a table (CPT), which lists the probability that the child node takes on each of its different values for each combination of values of its parents. Consider the following example, in which all nodes are binary, i.e., have two possible values, which we will denote by T (true) and F (false).
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/sprinkler.gif)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/sprinkler.gif)
 
-We see that the event "grass is wet" (W=true) has two possible causes: either the water sprinker is on (S=true) or it is raining (R=true). The strength of this relationship is shown in the table. For example, we see that Pr(W=true | S=true, R=false) = 0.9 (second row), and hence, Pr(W=false | S=true, R=false) = 1 - 0.9 = 0.1, since each row must sum to one. Since the C node has no parents, its CPT specifies the prior probability that it is cloudy (in this case, 0.5). (Think of C as representing the season: if it is a cloudy season, it is less likely that the sprinkler is on and more likely that the rain is on.)
+We see that the event "grass is wet" (W=true) has two possible causes: either the water sprinker is on (S=true) or it is raining (R=true). The strength of this relationship is shown in the table. For example, we see that Pr(W=true\|S=true, R=false) = 0.9 (second row), and hence, Pr(W=false\|S=true, R=false) = 1 - 0.9 = 0.1, since each row must sum to one. Since the C node has no parents, its CPT specifies the prior probability that it is cloudy (in this case, 0.5). (Think of C as representing the season: if it is a cloudy season, it is less likely that the sprinkler is on and more likely that the rain is on.)
 
 The simplest conditional independence relationship encoded in a Bayesian network can be stated as follows: a node is independent of its ancestors given its parents, where the ancestor/parent relationship is with respect to some fixed topological ordering of the nodes.
 
 By the chain rule of probability, the joint probability of all the nodes in the graph above is
 
-P(C, S, R, W) = P(C) * P(S|C) * P(R|C,S) * P(W|C,S,R)
+P(C, S, R, W) = P(C) * P(S\|C) * P(R\|C,S) * P(W\|C,S,R)
 
 By using conditional independence relationships, we can rewrite this as
 
-P(C, S, R, W) = P(C) * P(S|C) * P(R|C)   * P(W|S,R)
+P(C, S, R, W) = P(C) * P(S\|C) * P(R\|C)   * P(W\|S,R)
 
 where we were allowed to simplify the third term because R is independent of S given its parent C, and the last term because W is independent of C given its parents S and R.
 
@@ -103,7 +104,7 @@ is a normalizing constant, equal to the probability (likelihood) of the data. So
 
 <a name="explainaway"></a>In the above example, notice that the two causes "compete" to "explain" the observed data. Hence S and R become conditionally dependent given that their common child, W, is observed, even though they are marginally independent. For example, suppose the grass is wet, but that we also know that it is raining. Then the posterior probability that the sprinkler is on goes down:
 
-Pr(S=1|W=1,R=1) = 0.1945
+Pr(S=1\|W=1,R=1) = 0.1945
 
 <a name="explainaway"></a>This is called "explaining away". In statistics, this is known as Berkson's paradox, or "selection bias". For a dramatic example of this effect, consider a college which admits students who are either brainy or sporty (or both!). Let C denote the event that someone is admitted to college, which is made true if they are either brainy (B) or sporty (S). Suppose in the general population, B and S are independent. We can model our conditional independence assumptions using a graph which is a V structure, with arrows pointing down:
   
@@ -112,7 +113,7 @@ Pr(S=1|W=1,R=1) = 0.1945
      v
      C
 
-<a name="explainaway"></a>Now look at a population of college students (those for which C is observed to be true). It will be found that being brainy makes you less likely to be sporty and vice versa, because either property alone is sufficient to explain the evidence on C (i.e., P(S=1 | C=1, B=1) <= P(S=1 | C=1)). (If you don't believe me, [try this little BNT demo](https://www.cs.ubc.ca/~murphyk/Bayes/brainy.m)!)
+<a name="explainaway"></a>Now look at a population of college students (those for which C is observed to be true). It will be found that being brainy makes you less likely to be sporty and vice versa, because either property alone is sufficient to explain the evidence on C (i.e., P(S=1\|C=1, B=1) <= P(S=1\|C=1)). (If you don't believe me, [try this little BNT demo](https://www.cs.ubc.ca/~murphyk/Bayes/brainy.m)!)
 
 ## Top-down and bottom-up reasoning
 
@@ -133,7 +134,7 @@ In the water sprinkler example, we had evidence of an effect (wet grass), and in
 
 In general, the conditional independence relationships encoded by a Bayes Net are best be explained by means of the "Bayes Ball" algorithm (due to Ross Shachter), which is as follows: Two (sets of) nodes A and B are conditionally independent (d-separated) given a set C if and only if there is no way for a ball to get from A to B in the graph, where the allowable movements of the ball are shown below. Hidden nodes are nodes whose values are not known, and are depicted as unshaded; observed nodes (the ones we condition on) are shaded. The dotted arcs indicate direction of flow of the ball.
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/bayes_ball_no_det.gif)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/bayes_ball_no_det.gif)
 
 The most interesting case is the first column, when we have two arrows converging on a node X (so X is a "leaf" with two parents). If X is hidden, its parents are marginally independent, and hence the ball does not pass through (the ball being "turned around" is indicated by the curved arrows); but if X is observed, the parents become dependent, and the ball does pass through, because of the explaining away phenomenon. Notice that, if this graph was undirected, the child would always separate the parents; hence when converting a directed graph to an undirected graph, we must add links between "unmarried" parents who share a common child (i.e., "moralize" the graph) to prevent us reading off incorrect independence statements.
 
@@ -143,17 +144,9 @@ Now consider the second column in which we have two diverging arrows from X (so 
 
 The introductory example used nodes with categorical values and multinomial distributions. It is also possible to create Bayesian networks with continuous valued nodes. The most common distribution for such variables is the Gaussian. For discrete nodes with continuous parents, we can use the logistic/softmax distribution. Using multinomials, conditional Gaussians, and the softmax distribution, we can have a rich toolbox for making complex models. Some examples are shown below. For details, click [here](https://www.cs.ubc.ca/~murphyk/Bayes/usage.html#examples). (Circles denote continuous-valued random variables, squares denote discrete rv's, clear means hidden, and shaded means observed.)
 
-<center>
-
 | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/mixexp.gif) | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/hme.gif) |
 
-</center>
-
-<center>
-
 | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/fa.gif) | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/mfa.gif) | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/fa_scalar.gif) | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/ifa.gif) |
-
-</center>
 
 For more details, see this excellent paper.
 
@@ -183,7 +176,7 @@ Some common variants on HMMs are shown below.
 
 <a name="hmm"></a>
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/hmm_zoo.gif)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/hmm_zoo.gif)
 
 <a name="hmm"></a>
 
@@ -200,11 +193,10 @@ Some common variants on HMMs are shown below.
 
 <a name="lds"></a>
 
-<center>
+
 
 | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/ar1.gif) | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/sar.gif) | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/kf.gif) | ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/skf.gif) |
 
-</center>
 
 <a name="lds"></a>
 
@@ -212,7 +204,7 @@ The Kalman filter has been proposed as a model for how the brain integrates visu
 
 <a name="lds"></a>
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/kfhead.jpg)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/kfhead.jpg)
 
 <a name="lds"></a>
 
@@ -307,7 +299,7 @@ The running time of the DP algorithms is exponential in the size of the largest 
 Many models of interest, such as those with repetitive structure, as in multivariate time-series or image analysis, have large induced width, which makes exact inference very slow. We must therefore resort to approximation techniques. Unfortunately, approximate inference is #P-hard, but we can nonetheless come up with approximations which often work well in practice. Below is a list of the major techniques.
 
 *   Variational methods. The simplest example is the mean-field approximation, which exploits the law of large numbers to approximate large sums of random variables by their means. In particular, we essentially decouple all the nodes, and introduce a new parameter, called a variational parameter, for each node, and iteratively update these parameters so as to minimize the cross-entropy (KL distance) between the approximate and true probability distributions. Updating the variational parameters becomes a proxy for inference. The mean-field approximation produces a lower bound on the likelihood. More sophisticated methods are possible, which give tighter lower (and upper) bounds.
-*   Sampling (Monte Carlo) methods. The simplest kind is importance sampling, where we draw random samples x from P(X), the (unconditional) distribution on the hidden variables, and then weight the samples by their likelihood, P(y|x), where y is the evidence. A more efficient approach in high dimensions is called Monte Carlo Markov Chain (MCMC), and includes as special cases Gibbs sampling and the Metropolis-Hasting algorithm.
+*   Sampling (Monte Carlo) methods. The simplest kind is importance sampling, where we draw random samples x from P(X), the (unconditional) distribution on the hidden variables, and then weight the samples by their likelihood, P(y\|x), where y is the evidence. A more efficient approach in high dimensions is called Monte Carlo Markov Chain (MCMC), and includes as special cases Gibbs sampling and the Metropolis-Hasting algorithm.
 *   "Loopy belief propogation". This entails applying Pearl's algorithm to the original graph, even if it has loops (undirected cycles). In theory, this runs the risk of double counting, but Yair Weiss and others have proved that in certain cases (e.g., a single loop), events are double counted "equally", and hence "cancel" to give the right answer. Belief propagation is equivalent to exact inference on a modified graph, called the universal cover or unwrapped/ computation tree, which has the same local topology as the original graph. This is the same as the Bethe and cavity/TAP approaches in statistical physics. Hence there is a deep connection between belief propagation and variational methods that people are currently investigating.
 *   Bounded cutset conditioning. By instantiating subsets of the variables, we can break loops in the graph. Unfortunately, when the cutset is large, this is very slow. By instantiating only a subset of values of the cutset, we can compute lower bounds on the probabilities of interest. Alternatively, we can sample the cutsets jointly, a technique known as block Gibbs sampling.
 *   Parametric approximation methods. These express the intermediate summands in a simpler form, e.g., by approximating them as a product of smaller factors. "Minibuckets" and the Boyen-Koller algorithm fall into this category.
@@ -316,23 +308,31 @@ Approximate inference is a huge topic: see the references for more details.
 
 ## Inference in DBNs
 
-The general inference problem for DBNs is to compute P(X(i,t0) | y(:, t1:t2)), where X(i,t) represents the i'th hidden variable at time and t Y(:,t1:t2) represents all the evidence between times t1 and t2\. (In fact, we often also want to compute joint distributions of variables over one or more time slcies.) There are several special cases of interest, illustrated below. The arrow indicates t0: it is X(t0) that we are trying to estimate. The shaded region denotes t1:t2, the available data.
+The general inference problem for DBNs is to compute P(X(i,t0)\|y(:, t1:t2)), where X(i,t) represents the i'th hidden variable at time and t Y(:,t1:t2) represents all the evidence between times t1 and t2\. (In fact, we often also want to compute joint distributions of variables over one or more time slcies.) There are several special cases of interest, illustrated below. The arrow indicates t0: it is X(t0) that we are trying to estimate. The shaded region denotes t1:t2, the available data.
 
 ![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/filter.gif)
 
 Here is a simple example of inference in an LDS. Consider a particle moving in the plane at constant velocity subject to random perturbations in its trajectory. The new position (x1, x2) is the old position plus the velocity (dx1, dx2) plus noise w.
 
-[ x1(t)  ] =  [1 0 1 0] [ x1(t-1)  ] + [ wx1  ]
-[ x2(t)  ]    [0 1 0 1] [ x2(t-1)  ]   [ wx2  ]
-[ dx1(t) ]    [0 0 1 0] [ dx1(t-1) ]   [ wdx1 ]
-[ dx2(t) ]    [0 0 0 1] [ dx2(t-1) ]   [ wdx2 ]
+
+[ x1(t)  ] =  [1 0 1 0]  [ x1(t-1)  ] + [ wx1  ]
+
+[ x2(t)  ]    [0 1 0 1]  [ x2(t-1)  ]   [ wx2  ]
+
+[ dx1(t) ]    [0 0 1 0]  [ dx1(t-1) ]   [ wdx1 ]
+
+[ dx2(t) ]    [0 0 0 1]  [ dx2(t-1) ]   [ wdx2 ]
 
 We assume we only observe the position of the particle.
 
-[ y1(t) ] =  [1 0 0 0] [ x1(t)  ] + [ vx1 ]
-[ y2(t) ]    [0 1 0 0] [ x2(t)  ]   [ vx2 ]
-                       [ dx1(t) ] 
-                       [ dx2(t) ]
+|---
+| matrix |
+| -------------------
+| [ y1(t) ] =  [1 0 0 0]  [ x1(t)  ] + [ vx1 ]
+| [ y2(t) ]    [0 1 0 0]  [ x2(t)  ]   [ vx2 ]
+|                         [ dx1(t) ] 
+|                         [ dx2(t) ]
+|---
 
 Suppose we start out at position (10,10) moving to the right with velocity (1,0). We sampled a random trajectory of length 15\. Below we show the filtered and smoothed trajectories.
 
@@ -344,12 +344,14 @@ The mean squared error of the filtered estimate is 4.9; for the smoothed estimat
 
 <a name="learn"></a>One needs to specify two things to describe a BN: the graph topology (structure) and the parameters of each CPD. It is possible to learn both of these from data. However, learning structure is much harder than learning parameters. Also, learning when some of the nodes are hidden, or we have missing data, is much harder than when everything is observed. This gives rise to 4 cases:
 
-Structure   Observability    Method
----------------------------------------------
-Known       Full             Maximum Likelihood Estimation
-Known       Partial          EM (or gradient ascent)
-Unknown     Full             Search through model space 
-Unknown     Partial          EM + search through model space 
+|---
+| Structure | Observability  |  Method
+| ---------------------------------------------
+| Known     |  Full          |   Maximum Likelihood Estimation
+| Known     |  Partial       |   EM (or gradient ascent)
+| Unknown   |  Full          |   Search through model space 
+| Unknown   |  Partial       |   EM + search through model space 
+|---
 
 <a name="learn"></a>
 
@@ -357,7 +359,7 @@ Unknown     Partial          EM + search through model space
 
 <a name="sec:known_struct_full_obs"></a>We assume that the goal of learning in this case is to find the values of the parameters of each CPD which maximizes the likelihood of the training data, which contains N cases (assumed to be independent). The normalized log-likelihood of the training set D is a sum of terms, one for each node:
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Eqns/loglik.gif)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Eqns/loglik.gif)
 
 <a name="sec:known_struct_full_obs"></a>We see that the log-likelihood scoring function _decomposes_ according to the structure of the graph, and hence we can maximize the contribution to the log-likelihood of each node independently (assuming the parameters in each node are independent of the other nodes).
 
@@ -381,7 +383,7 @@ As is well known from the HMM literature, ML estimates of CPTs are prone to spar
 
 <a name="sec:known_struct_partial_obs"></a>When some of the nodes are hidden, we can use the EM (Expectation Maximization) algorithm to find a (locally) optimal Maximum Likelihood Estimate of the parameters. The basic idea behind EM is that, if we knew the values of all the nodes, learning (the M step) would be easy, as we saw above. So in the E step, we compute the expected values of all the nodes using an inference algorithm, and then treat these expected values as though they were observed (distributions). For example, in the case of the W node, we replace the observed counts of the events with the number of times we expect to see each event:
 
-P(W=w|S=s,R=r) = E N(W=w,S=s,R=r) / E N(S=s,R=r)
+P(W=w\|S=s,R=r) = E N(W=w,S=s,R=r) / E N(S=s,R=r)
 
 <a name="sec:known_struct_partial_obs"></a>
 
@@ -391,11 +393,11 @@ where E N(x) is the expected number of times event x occurs in the whole trainin
 
 <a name="sec:known_struct_partial_obs"></a>
 
-E N(.) = E sum_k I(. | D(k)) = sum_k P(. | D(k))
+E N(.) = E sum_k I(.\|D(k)) = sum_k P(.\|D(k))
 
 <a name="sec:known_struct_partial_obs"></a>
 
-where I(x | D(k)) is an indicator function which is 1 if event x occurs in training case k, and 0 otherwise.
+where I(x\|D(k)) is an indicator function which is 1 if event x occurs in training case k, and 0 otherwise.
 
 <a name="sec:known_struct_partial_obs"></a>
 
@@ -413,11 +415,11 @@ Given the expected counts, we maximize the parameters, and then recompute the ex
 
 <a name="sec:cost_fn"></a>The maximum likelihood model will be a complete graph, since this has the largest number of parameters, and hence can fit the data the best. A well-principled way to avoid this kind of over-fitting is to put a prior on models, specifying that we prefer sparse models. Then, by Bayes' rule, the MAP model is the one that maximizes
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Eqns/bayes_rule.gif)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Eqns/bayes_rule.gif)
 
 <a name="sec:cost_fn"></a>Taking logs, we find
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Eqns/log_bayes_rule.gif)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Eqns/log_bayes_rule.gif)
 
 <a name="sec:cost_fn"></a>where c = - \log \Pr(D) is a constant independent of G.
 
@@ -425,7 +427,7 @@ The effect of the structure prior P(G) is equivalent to penalizing overly comple
 
 <a name="sec:cost_fn"></a>
 
-P(D|G) = \int_{\theta} P(D|G, \theta)
+P(D\|G) = \int_{\theta} P(D\|G, \theta)
 
 <a name="sec:cost_fn"></a>has a similar effect of penalizing models with too many parameters (this is known as Occam's razor).
 
@@ -443,11 +445,11 @@ If we know the ordering of the nodes, life becomes much simpler, since we can le
 
 <a name="sec:algo"></a>
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/subsets_lattice.gif)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/subsets_lattice.gif)
 
 <a name="sec:algo"></a>
 
-There are three obvious ways to search this graph: bottom up, top down, or middle out. In the bottom up approach, we start at the bottom of the lattice, and evaluate the score at all points in each successive level. We must decide whether the gains in score produced by a larger parent set is ``worth it''. The standard approach in the reconstructibility analysis (RA) community uses the fact that \chi^2(X,Y) \approx I(X,Y) N \ln(4), where N is the number of samples and I(X,Y) is the mutual information (MI) between X and Y. Hence we can use a \chi^2 test to decide whether an increase in the MI score is statistically significant. (This also gives us some kind of confidence measure on the connections that we learn.) Alternatively, we can use a BIC score.
+There are three obvious ways to search this graph: bottom up, top down, or middle out. In the bottom up approach, we start at the bottom of the lattice, and evaluate the score at all points in each successive level. We must decide whether the gains in score produced by a larger parent set is ``worth it``. The standard approach in the reconstructibility analysis (RA) community uses the fact that \chi^2(X,Y) \approx I(X,Y) N \ln(4), where N is the number of samples and I(X,Y) is the mutual information (MI) between X and Y. Hence we can use a \chi^2 test to decide whether an increase in the MI score is statistically significant. (This also gives us some kind of confidence measure on the connections that we learn.) Alternatively, we can use a BIC score.
 
 <a name="sec:algo"></a>
 
@@ -473,9 +475,8 @@ An alternative technique, popular in the UAI community, is to start with an init
 
 <a name="sec:unknown_struct_partial_obs"></a>Finally, we come to the hardest case of all, where the structure is unknown and there are hidden variables and/or missing data. In this case, to compute the Bayesian score, we must marginalize out the hidden nodes as well as the parameters. Since this is usually intractable, it is common to usean asymptotic approximation to the posterior called BIC (Bayesian Information Criterion), which is defined as follows:
 
-\log \Pr(D|G) \approx \log \Pr(D|G, \hat{\Theta}_G) -  \frac{\log N}{2} \#G
-
-<a name="sec:unknown_struct_partial_obs"></a>where N is the number of samples, \hat{\Theta}_G is the ML estimate of the parameters, and #G is the dimension of the model. (In the fully observable case, the dimension of a model is the number of free parameters. In a model with hidden variables, it might be less than this.) The first term is just the likelihood and the second term is a penalty for model complexity. (The BIC score is identical to the Minimum Description Length (MDL) score.)
+$$\log \Pr(D\|G) \approx \log \Pr(D\|G, \hat{\Theta}_G) - \frac{\log N}{2} \#G$$
+where N is the number of samples, \hat{\Theta}_G is the ML estimate of the parameters, and #G is the dimension of the model. (In the fully observable case, the dimension of a model is the number of free parameters. In a model with hidden variables, it might be less than this.) The first term is just the likelihood and the second term is a penalty for model complexity. (The BIC score is identical to the Minimum Description Length (MDL) score.)
 
 Although the BIC score decomposes into a sum of local terms, one per node, local search is still expensive, because we need to run EM at each step to compute \hat{\Theta}. An alternative approach is to do the local search steps inside of the M step of EM - this is called Structureal EM, and provably converges to a local maximum of the BIC score (Friedman, 1997).
 
@@ -485,7 +486,7 @@ Although the BIC score decomposes into a sum of local terms, one per node, local
 
 <a name="sec:unknown_struct_partial_obs"></a>So far, structure learning has meant finding the right connectivity between pre-existing nodes. A more interesting problem is inventing hidden nodes on demand. Hidden nodes can make a model much more compact, as we see below.
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/hidden.gif)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/hidden.gif)
 
 <a name="sec:unknown_struct_partial_obs"></a>(a) A BN with a hidden variable H. (b) The simplest network that can capture the same distribution without using a hidden variable (created using arc reversal and node elimination). If H is binary and the other nodes are trinary, and we assume full CPTs, the first network has 45 independent parameters, and the second has 708.
 
@@ -493,7 +494,7 @@ The standard approach is to keep adding hidden nodes one at a time, to some part
 
 <a name="sec:unknown_struct_partial_obs"></a>
 
-\cite{Ramachandran98} use the following heuristic for finding nodes which need new parents: they consider a noisy-OR node which is nearly always on, even if its non-leak parents are off, as an indicator that there is a missing parent. Generalizing this technique beyond noisy-ORs is an interesting open problem. One approach might be to examine H(X|Pa(X)): if this is very high, it means the current set of parents are inadequate to ``explain'' the residual entropy; if Pa(X) is the best (in the BIC or \chi^2 sense) set of parents we have been able to find in the current model, it suggests we need to create a new node and add it to Pa(X).
+\cite{Ramachandran98} use the following heuristic for finding nodes which need new parents: they consider a noisy-OR node which is nearly always on, even if its non-leak parents are off, as an indicator that there is a missing parent. Generalizing this technique beyond noisy-ORs is an interesting open problem. One approach might be to examine H(X\|Pa(X)): if this is very high, it means the current set of parents are inadequate to ``explain`` the residual entropy; if Pa(X) is the best (in the BIC or \chi^2 sense) set of parents we have been able to find in the current model, it suggests we need to create a new node and add it to Pa(X).
 
 <a name="sec:unknown_struct_partial_obs"></a>
 
@@ -501,7 +502,7 @@ A simple heuristic for inventing hidden nodes in the case of DBNs is to check if
 
 <a name="sec:unknown_struct_partial_obs"></a>
 
-Of course, interpreting the ``meaning'' of hidden nodes is always tricky, especially since they are often unidentifiable, e.g., we can often switch the interpretation of the true and false states (assuming for simplicity that the hidden node is binary) provided we also permute the parameters appropriately. (Symmetries such as this are one cause of the multiple maxima in the likelihood surface.)
+Of course, interpreting the ``meaning`` of hidden nodes is always tricky, especially since they are often unidentifiable, e.g., we can often switch the interpretation of the true and false states (assuming for simplicity that the hidden node is binary) provided we also permute the parameters appropriately. (Symmetries such as this are one cause of the multiple maxima in the likelihood surface.)
 
 <a name="sec:unknown_struct_partial_obs"></a>
 
@@ -530,7 +531,7 @@ BNs originally arose out of an attempt to add probabilities to expert systems, a
 
 <a name="appl"></a>
 
-<center>![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/qmr.gif)</center>
+![](https://www.cs.ubc.ca/~murphyk/Bayes/Figures/qmr.gif)
 
 <a name="appl"></a>Here, the top layer represents hidden disease nodes, and the bottom layer represents observed symptom nodes. The goal is to infer the posterior probability of each disease given all the symptoms (which can be present, absent or unknown). QMR-DT is so densely connected that exact inference is impossible. Various approximation methods have been used, including sampling, variational and loopy belief propagation.
 
