@@ -314,25 +314,21 @@ The general inference problem for DBNs is to compute P(X(i,t0)\|y(:, t1:t2)), wh
 
 Here is a simple example of inference in an LDS. Consider a particle moving in the plane at constant velocity subject to random perturbations in its trajectory. The new position (x1, x2) is the old position plus the velocity (dx1, dx2) plus noise w.
 
-
+```
 [ x1(t)  ] =  [1 0 1 0]  [ x1(t-1)  ] + [ wx1  ]
-
 [ x2(t)  ]    [0 1 0 1]  [ x2(t-1)  ]   [ wx2  ]
-
 [ dx1(t) ]    [0 0 1 0]  [ dx1(t-1) ]   [ wdx1 ]
-
 [ dx2(t) ]    [0 0 0 1]  [ dx2(t-1) ]   [ wdx2 ]
+```
 
 We assume we only observe the position of the particle.
 
-|---
-| matrix |
-| -------------------
-| [ y1(t) ] =  [1 0 0 0]  [ x1(t)  ] + [ vx1 ]
-| [ y2(t) ]    [0 1 0 0]  [ x2(t)  ]   [ vx2 ]
-|                         [ dx1(t) ] 
-|                         [ dx2(t) ]
-|---
+```
+ [ y1(t) ] =  [1 0 0 0]  [ x1(t)  ] + [ vx1 ]
+ [ y2(t) ]    [0 1 0 0]  [ x2(t)  ]   [ vx2 ]
+                         [ dx1(t) ] 
+                         [ dx2(t) ]
+```
 
 Suppose we start out at position (10,10) moving to the right with velocity (1,0). We sampled a random trajectory of length 15\. Below we show the filtered and smoothed trajectories.
 
