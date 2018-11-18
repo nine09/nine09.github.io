@@ -9,6 +9,9 @@ article_header:
 comment: true
 mathjax: true
 key: 20181029
+tags: 
+- 技术
+- AI
 ---
 
 My first Probability Graph Model! Excited!
