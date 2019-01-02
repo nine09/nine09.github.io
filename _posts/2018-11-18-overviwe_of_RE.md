@@ -73,15 +73,15 @@ tags:
 		- 本论文讲常用的1-D attention vector， 替换为2-D attention matirx，得到了不错的效果。
 	- ACL 2018
 14. **Neural Relation Extraction via
- Inner-Sentence Noise Reduction and Transfer Learning**
- 	- Characteristics:
- 		- 本文的点主要在两部分，第一是很新奇的使用了依存树来对远程监督的句子进行处理，只关注句子中实体所在的子树，去除句子的其他所有成分，达到了降噪的效果。同时，为了近一步优化模型，模型使用实体标注task作预训练，之后将参数迁移至RE模型中
- 		- 疑问：取子树环节是只针对训练过程的吗？还是也同时对Test数据有效？
- 	- ACL 2018
- 15. **Distant supervision for relation extraction without labeled data**
- 	- 本文是DS的开山之作，提出DS的论文。
- 	- Supervised：In supervised approaches, sentences in a cor- pus are first hand-labeled for the presence of en- tities and the relations between them. The NIST Automatic Content Extraction (ACE) RDC 2003 and 2004 corpora, for example, include over 1,000 documents in which pairs of entities have been la- beled with 5 to 7 major relation types and 23 to 24 subrelations, totaling 16,771 relation instances. ACE systems then extract a wide variety of lexi- cal, syntactic, and semantic features, and use su- pervised classifiers to label the relation mention holding between a given pair of entities in a test set sentence, optionally combining relation mentions.
- 	- Unsupervised: An alternative approach, purely unsupervised information extraction, extracts strings of words between entities in large amounts of text, and clusters and simplifies these word strings to pro- duce relation-strings (Shinyama and Sekine, 2006; Banko et al., 2007). Unsupervised approaches can use very large amounts of data and extract very large numbers of relations, but the resulting rela- tions may not be easy to map to relations needed for a particular knowledge base.
+Inner-Sentence Noise Reduction and Transfer Learning**
+	- Characteristics:
+		- 本文的点主要在两部分，第一是很新奇的使用了依存树来对远程监督的句子进行处理，只关注句子中实体所在的子树，去除句子的其他所有成分，达到了降噪的效果。同时，为了近一步优化模型，模型使用实体标注task作预训练，之后将参数迁移至RE模型中
+		- 疑问：取子树环节是只针对训练过程的吗？还是也同时对Test数据有效？
+	- ACL 2018
+15. **Distant supervision for relation extraction without labeled data**
+	- 本文是DS的开山之作，提出DS的论文。
+	- Supervised：In supervised approaches, sentences in a cor- pus are first hand-labeled for the presence of en- tities and the relations between them. The NIST Automatic Content Extraction (ACE) RDC 2003 and 2004 corpora, for example, include over 1,000 documents in which pairs of entities have been la- beled with 5 to 7 major relation types and 23 to 24 subrelations, totaling 16,771 relation instances. ACE systems then extract a wide variety of lexi- cal, syntactic, and semantic features, and use su- pervised classifiers to label the relation mention holding between a given pair of entities in a test set sentence, optionally combining relation mentions.
+	- Unsupervised: An alternative approach, purely unsupervised information extraction, extracts strings of words between entities in large amounts of text, and clusters and simplifies these word strings to pro- duce relation-strings (Shinyama and Sekine, 2006; Banko et al., 2007). Unsupervised approaches can use very large amounts of data and extract very large numbers of relations, but the resulting rela- tions may not be easy to map to relations needed for a particular knowledge base.
 
 
 
