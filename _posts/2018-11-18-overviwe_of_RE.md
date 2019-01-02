@@ -55,6 +55,36 @@ tags:
 	- 大名鼎鼎的TranE.
 10. **Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Network.**
 	- 大名鼎鼎的PCNN + Multi-Instances Learning.
+11. *Denoising Distantly Supervised Open-Domain Question Answering*
+	- Characteristics:
+		- 文中描述了DS在QA上的应用方式，数据集。以及对于远程监督过程的降噪处理。
+		- 其检索与问句中实体有关的wikipedia的paragraph，并假设其中的信息能够回答该问题。这是远程监督的思路。在这些文段中，抽取一些较可信文段，并在文字中select出一部分作为问题答案。其中包含对DS语料的降噪和select answer的方式，值得参考。
+	- ACL 2018
+12. **Learning When to Trust Distant Supervision: An application to low-resource POS tagging using cross-lingual projection**
+	- Characteristics:
+		- 本文清晰地介绍了远程监督运用在POS任务上的过程。其利用双语对应语料，和其中一种语言的POS训练语料，生成另一种POS的训练语料。这体现了远程监督的思维方式。
+		- 在模型的实际工作中，为了降噪，加入了标签的转移矩阵，这是一种常见的对远程监督数据降噪的一种手法。
+		- 在实验设置上，其首先证明了远程监督降噪的必要，又证明了远程监督+降噪>极少量手工标注数据的道理，论证了其研究的意义
+			- Gold Standard：These languages are obviously not low-resource languages, however we can use this data to simulate the low-resource setting by only using a small 1,000 tokens of the gold annotations for training.
+			- There are an average of 1.85 million parallel sentences for each of the eight language pairs.
+	- ACL 2016
+13. Multi-Level Structureed Self-Attention for Distantly Supervised Relation Extraction
+	- Characteristics;
+		- 本论文讲常用的1-D attention vector， 替换为2-D attention matirx，得到了不错的效果。
+	- ACL 2018
+14. **Neural Relation Extraction via
+ Inner-Sentence Noise Reduction and Transfer Learning**
+ 	- Characteristics:
+ 		- 本文的点主要在两部分，第一是很新奇的使用了依存树来对远程监督的句子进行处理，只关注句子中实体所在的子树，去除句子的其他所有成分，达到了降噪的效果。同时，为了近一步优化模型，模型使用实体标注task作预训练，之后将参数迁移至RE模型中
+ 		- 疑问：取子树环节是只针对训练过程的吗？还是也同时对Test数据有效？
+ 	- ACL 2018
+ 15. **Distant supervision for relation extraction without labeled data**
+ 	- 本文是DS的开山之作，提出DS的论文。
+ 	- Supervised：In supervised approaches, sentences in a cor- pus are first hand-labeled for the presence of en- tities and the relations between them. The NIST Automatic Content Extraction (ACE) RDC 2003 and 2004 corpora, for example, include over 1,000 documents in which pairs of entities have been la- beled with 5 to 7 major relation types and 23 to 24 subrelations, totaling 16,771 relation instances. ACE systems then extract a wide variety of lexi- cal, syntactic, and semantic features, and use su- pervised classifiers to label the relation mention holding between a given pair of entities in a test set sentence, optionally combining relation mentions.
+ 	- Unsupervised: An alternative approach, purely unsupervised information extraction, extracts strings of words between entities in large amounts of text, and clusters and simplifies these word strings to pro- duce relation-strings (Shinyama and Sekine, 2006; Banko et al., 2007). Unsupervised approaches can use very large amounts of data and extract very large numbers of relations, but the resulting rela- tions may not be easy to map to relations needed for a particular knowledge base.
+
+
+
 
 
 封面照片摄于罗马🇮🇹
