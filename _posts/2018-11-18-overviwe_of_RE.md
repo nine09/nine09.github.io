@@ -83,8 +83,25 @@ Inner-Sentence Noise Reduction and Transfer Learning**
 	- Supervised：In supervised approaches, sentences in a cor- pus are first hand-labeled for the presence of en- tities and the relations between them. The NIST Automatic Content Extraction (ACE) RDC 2003 and 2004 corpora, for example, include over 1,000 documents in which pairs of entities have been la- beled with 5 to 7 major relation types and 23 to 24 subrelations, totaling 16,771 relation instances. ACE systems then extract a wide variety of lexi- cal, syntactic, and semantic features, and use su- pervised classifiers to label the relation mention holding between a given pair of entities in a test set sentence, optionally combining relation mentions.
 	- Unsupervised: An alternative approach, purely unsupervised information extraction, extracts strings of words between entities in large amounts of text, and clusters and simplifies these word strings to pro- duce relation-strings (Shinyama and Sekine, 2006; Banko et al., 2007). Unsupervised approaches can use very large amounts of data and extract very large numbers of relations, but the resulting rela- tions may not be easy to map to relations needed for a particular knowledge base.
 
+## RE 2019
+1. *Nerual Relation Extraction Within and Across Sentence Boundaries*
+
+### 强化学习
+1. **Reinforcement Learning for Relation Classification from Noisy Data**
+	- 用RL agent 做instance selection，选择一些句子训练relation classifier. 以避免Noise data的影响
+2. A Hierarchical Framework for Relation Extraction with Reinforcement Learning.
+	- 通过一个分层级的RL agent来联合抽取关系，与实体。
+	- agent将实体视为关系的argument，先通过high-level的policy，选择option，option就是关系的label。如果检测到option 不等于 NR，则出发low level policy，做实体标注任务。
+	- low level policy通过回传reward，和最后一个state，与high-level policy交互。
+
+### GAN
+1. SeqGAN: Sequence Generative Adversarial Bets with Policy Gradient.
+	- 和原始GAN相比，SeqGAN使用policy gradient解决了文本生成中，采样造成的梯度消失。
 
 
+### paper from CV 从视觉那里偷学来的网络结构
+1. Densely Connected Convolutional Networks
+	- DenseNet 全连接的Convolutional Network
 
 
 封面照片摄于罗马🇮🇹
